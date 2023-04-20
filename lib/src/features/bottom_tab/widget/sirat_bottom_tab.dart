@@ -25,15 +25,15 @@ class SiratNavigationBar extends StatelessWidget {
           items: [
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/images/navigation_icon/svg/home_nfill.svg',
+                'assets/images/navigation_icon/svg/watch_nfill.svg',
                 color: Theme.of(context)
                     .bottomNavigationBarTheme
                     .unselectedItemColor,
                 width: 24.sp,
               ),
-              label: 'Home',
+              label: 'Times',
               activeIcon: SvgPicture.asset(
-                'assets/images/navigation_icon/svg/home_nfill.svg',
+                'assets/images/navigation_icon/svg/watch_nfill.svg',
                 color: Theme.of(context)
                     .bottomNavigationBarTheme
                     .selectedItemColor,
@@ -42,15 +42,15 @@ class SiratNavigationBar extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/images/navigation_icon/svg/search.svg',
+                'assets/images/navigation_icon/svg/qibla_nfill.svg',
                 color: Theme.of(context)
                     .bottomNavigationBarTheme
                     .unselectedItemColor,
                 width: 24.sp,
               ),
-              label: 'Search',
+              label: 'Compass',
               activeIcon: SvgPicture.asset(
-                'assets/images/navigation_icon/svg/search.svg',
+                'assets/images/navigation_icon/svg/qibla_nfill.svg',
                 color: Theme.of(context)
                     .bottomNavigationBarTheme
                     .selectedItemColor,
@@ -65,26 +65,9 @@ class SiratNavigationBar extends StatelessWidget {
                     .bottomNavigationBarTheme
                     .unselectedItemColor,
               ),
-              label: 'Quran',
+              label: 'Zikr',
               activeIcon: SvgPicture.asset(
                 'assets/images/navigation_icon/svg/quran_nfill.svg',
-                color: Theme.of(context)
-                    .bottomNavigationBarTheme
-                    .selectedItemColor,
-                width: 24.sp,
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/images/navigation_icon/svg/bookmark_nfill.svg',
-                color: Theme.of(context)
-                    .bottomNavigationBarTheme
-                    .unselectedItemColor,
-                width: 24.sp,
-              ),
-              label: 'Bookmark',
-              activeIcon: SvgPicture.asset(
-                'assets/images/navigation_icon/svg/bookmark_nfill.svg',
                 color: Theme.of(context)
                     .bottomNavigationBarTheme
                     .selectedItemColor,
@@ -99,7 +82,7 @@ class SiratNavigationBar extends StatelessWidget {
                     .unselectedItemColor,
                 width: 24.sp,
               ),
-              label: 'Setting',
+              label: 'Settings',
               activeIcon: SvgPicture.asset(
                 'assets/images/navigation_icon/svg/setting_nfill.svg',
                 color: Theme.of(context)
