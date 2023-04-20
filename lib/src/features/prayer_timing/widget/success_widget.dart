@@ -74,6 +74,9 @@ class SuccessWidget extends StatelessWidget {
                   children: controller.generateTimingList(),
                 ),
               ),
+              SizedBox(
+                height: 100.h,
+              ),
             ],
           ),
         )
