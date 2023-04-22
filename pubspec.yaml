@@ -32,6 +32,7 @@ dependencies:
   shared_preferences: ^2.0.6
   sqflite: ^2.0.0+3
   url_launcher: ^6.0.9
+  csv: ^5.0.1
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +59,7 @@ flutter:
     - assets/images/quran_icon/svg/
     - assets/images/image_of_the_day/
     - assets/sound/
+    - assets/csv/
 
   fonts:
     - family: Uthman

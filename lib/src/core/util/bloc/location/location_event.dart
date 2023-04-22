@@ -9,12 +9,18 @@ class InitLocation extends LocationEvent {
   List<Object> get props => [];
 }
 
+class ResetLocation extends LocationEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class SetLocation extends LocationEvent {
   final double latitude;
   final double longitude;
+  final String city;
 
-  SetLocation(this.latitude, this.longitude);
+  SetLocation(this.latitude, this.longitude, this.city);
 
   @override
-  List<Object> get props => [latitude, longitude];
+  List<Object> get props => [latitude, longitude, city];
 }

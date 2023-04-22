@@ -59,6 +59,13 @@ class _QiblaScaffoldState extends State<QiblaScaffold> {
                                   SizedBox(
                                     height: 32.h,
                                   ),
+                                  BlocBuilder<LocationBloc, LocationState>(
+                                    builder: (context, state) {
+                                      return Text(state.city,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold));
+                                    },
+                                  ),
                                   Text('Qiblah direction is '),
                                   Text(
                                     '${state.direction.toStringAsFixed(0)}°',
