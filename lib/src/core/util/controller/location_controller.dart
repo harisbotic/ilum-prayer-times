@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'dart:math';
 
+import 'package:csv/csv.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/services.dart';
 
 import 'package:geolocator/geolocator.dart';
 
@@ -87,56 +90,56 @@ Future<void> openLocationSetting() async {
   await Geolocator.openLocationSettings();
 }
 
-// Future<Either<Failure, Geocoding>> getAddress(
-//   double latitude,
-//   double longitude,
-// ) async {
-//   // / initiate apiservice class to perform get request to get address
-//   ApiService apiService =
-//       ApiService(networkClient: NetworkClient(REVERSE_GEOCODING_URL));
+Future<String> getCityFromCoordinates(double latitude, double longitude) async {
+  try {
+    final csv = await rootBundle.loadString('assets/csv/city_list.csv');
+    final cities = CsvToListConverter().convert(csv, eol: '\n');
 
-//   // / query parameters for get request to get address from api
-//   Map<String, Object> params = {
-//     'latlng': '$latitude,$longitude',
-//     'key': GOOGLE_API_KEY,
-//   };
+    var nearestCity = {"name": "", "country_code": ""};
+    double nearestCityDistance = double.maxFinite;
+    cities.skip(1).forEach((c) {
+      final distance = LocationDistanceCalculatorService.distanceFromDegrees(
+        latitude,
+        longitude,
+        c[1] as double,
+        c[2] as double,
+      );
 
-//   try {
-//     // / returned response from the api
-//     Response addressResponse = await apiService.getAddress(params);
+      if (distance < nearestCityDistance) {
+        nearestCityDistance = distance;
+        nearestCity = {
+          "name": c[0],
+          "country_code": c[3].toString().trimRight()
+        };
+      }
+    });
+    return nearestCity["name"]!;
+  } catch (e) {
+    return 'Failed to get city name';
+  }
+}
 
-//     // / case response is ok: [Geocoding] class is returned for the presentation layer.
-//     if (addressResponse.statusCode == 200) {
-//       final Geocoding geocoding = Geocoding.fromJson(
-//         addressResponse.data,
-//       );
+class LocationDistanceCalculatorService {
+  static double distanceFromDegrees(
+          double lat1, double lon1, double lat2, double lon2) =>
+      distanceFromRadians(_radiansFromDegrees(lat1), _radiansFromDegrees(lon1),
+          _radiansFromDegrees(lat2), _radiansFromDegrees(lon2));
 
-//       return Right(geocoding);
-//     }
+  static double distanceFromRadians(
+      double lat1, double lon1, double lat2, double lon2) {
+    // Implementation of the Haversine formula to calculate geographic distance on earth
+    // see https://en.wikipedia.org/wiki/Haversine_formula
+    // Accuracy: This offer calculations on the basis of a spherical earth (ignoring ellipsoidal effects)
 
-//     // / otherwise [Failure] is returned
-//     else {
-//       return Left(
-//         RemoteFailure(
-//             message: addressResponse.statusCode,
-//             errorType: DioErrorType.response),
-//       );
-//     }
-//   } on RemoteException catch (e) {
-//     String errorMessage = e.dioError.message;
-//     int? errorCode;
-//     for (final error in RemoteErrorCode.remoteErrors) {
-//       if (e.dioError.message.contains(error['rawMessage'].toString())) {
-//         errorMessage = error['message'].toString();
-//         errorCode = error['errorCode'] as int;
-//       }
-//     }
-//     return Left(
-//       RemoteFailure(
-//         message: errorMessage,
-//         errorType: DioErrorType.response,
-//         errorCode: errorCode,
-//       ),
-//     );
-//   }
-// }
+    var earthRadius = 6378137.0; // WGS84 major axis
+    double distance = 2 *
+        earthRadius *
+        asin(sqrt(pow(sin(lat2 - lat1) / 2, 2) +
+            cos(lat1) * cos(lat2) * pow(sin(lon2 - lon1) / 2, 2)));
+
+    return distance;
+  }
+
+  static double _radiansFromDegrees(final double degrees) =>
+      degrees * (pi / 180.0);
+}

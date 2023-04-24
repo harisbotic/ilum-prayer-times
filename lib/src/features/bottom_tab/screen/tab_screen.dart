@@ -64,7 +64,7 @@ class _TabScreenState extends State<TabScreen> with WidgetsBindingObserver {
 
   @override
   void didChangeDependencies() {
-    BlocProvider.of<LocationBloc>(context).add(InitLocation());
+    BlocProvider.of<LocationBloc>(context).add(ResetLocation());
     super.didChangeDependencies();
   }
 
