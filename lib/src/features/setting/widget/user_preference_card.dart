@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sirat_e_mustaqeem/src/core/util/bloc/timing_method/timing_method_bloc.dart';
+import 'package:sirat_e_mustaqeem/src/features/setting/widget/timing_method_select.dart';
 
 import '../../../core/util/bloc/notification/notification_bloc.dart';
 import '../../../core/util/bloc/theme/theme_bloc.dart';
 import '../../../core/util/bloc/time_format/time_format_bloc.dart';
+import '../../../core/util/bloc/timing_method/timing_methods.dart';
 import '../../utils/sirat_card.dart';
 import '../controller/setting_controller.dart';
 import 'change_format_switch.dart';
@@ -31,6 +34,31 @@ class UserPreferenceCard extends StatelessWidget {
           SizedBox(
             height: 8.h,
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Calculation Method',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2!
+                    .copyWith(color: Theme.of(context).primaryColor),
+              ),
+              BlocBuilder<TimingMethodBloc, TimingMethodState>(
+                builder: (context, state) {
+                  return TimingMethodSelect(
+                      items: TimingMethod.values,
+                      selectedItem: state.primaryTimingMethod,
+                      onChanged: (selectedMethod) {
+                        BlocProvider.of<TimingMethodBloc>(context).add(
+                          SetPrimaryTimingMethod(selectedMethod),
+                        );
+                      });
+                },
+              ),
+            ],
+          ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

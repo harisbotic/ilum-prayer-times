@@ -19,6 +19,7 @@ import 'src/core/util/bloc/surah/surah_bloc.dart';
 import 'src/core/util/bloc/tasbih/tasbih_bloc.dart';
 import 'src/core/util/bloc/theme/theme_bloc.dart';
 import 'src/core/util/bloc/time_format/time_format_bloc.dart';
+import 'src/core/util/bloc/timing_method/timing_method_bloc.dart';
 import 'src/features/bottom_tab/bloc/tab/tab_bloc.dart';
 import 'src/features/quran/bloc/quran_theme/quran_theme_bloc.dart';
 
@@ -50,6 +51,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => TimingBloc(),
+        ),
+        BlocProvider(
+          create: (context) => TimingMethodBloc(),
         ),
         BlocProvider(
           create: (context) => AllahNameBloc(),
